@@ -3,7 +3,7 @@ image: docker:stable
 variables:
   BASE_TAG: pddstudio/dindwnvm
   IMAGE_TAG: develop
-  DOCKER_IMAGE_BUILD: $CI_REGISTRY_IMAGE/$BASE_TAG
+  DOCKER_IMAGE_BUILD: $CI_REGISTRY_IMAGE
 
 services:
   - docker:dind
