@@ -25,3 +25,19 @@ build-image:
   only:
     - develop
     - web
+
+build-master:
+  stage: build
+  variables:
+    IMAGE_TAG: latest
+  before_script:
+    - echo Building and Pushing public page image to registry ${CI_REGISTRY}
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    - docker build --pull -t $DOCKER_IMAGE_BUILD:$IMAGE_TAG -t $BASE_TAG:$IMAGE_TAG .
+    - docker push $DOCKER_IMAGE_BUILD:$IMAGE_TAG
+  after_script:
+    - docker logout
+  allow_failure: false
+  only:
+    - master
