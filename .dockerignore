@@ -1,0 +1,4 @@
+Dockerfile
+wrapdocker
+var-lib/
+docker-static/
