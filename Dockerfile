@@ -49,6 +49,7 @@ RUN find . -name '*.sh' -exec chmod a+x {} \;  && \
     echo "==== END ENV SETUP ===="
 
 VOLUME [ "/home/appuser/build" ]
+ENV BASH_ENV "/home/appuser/.bashrc"
 # VOLUME /home/appuser
 ENTRYPOINT [ "/usr/local/bin/dumb-init", "--" ]
 CMD [ "./docker-entrypoint.sh", "/usr/local/bin/docker", "version" ]
