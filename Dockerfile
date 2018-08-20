@@ -49,7 +49,11 @@ RUN find . -name '*.sh' -exec chmod a+x {} \;  && \
     echo "==== END ENV SETUP ===="
 
 VOLUME [ "/home/appuser/build" ]
+
+# setting some environment variables (exposed, use with care)
 ENV BASH_ENV "/home/appuser/.bashrc"
+ENV NVM_DIR "/home/appuser/.nvm"
+
 # VOLUME /home/appuser
 ENTRYPOINT [ "/usr/local/bin/dumb-init", "--" ]
 CMD [ "./docker-entrypoint.sh", "/usr/local/bin/docker", "version" ]
