@@ -1,0 +1,37 @@
+version: 2
+jobs:
+  build:
+    machine:
+      enabled: true
+      image: pddstudio/dindwnvm:latest
+    working_directory: /home/appuser
+    steps:
+      - checkout
+      - run:
+          name: Build Docker Image
+          shell: /bin/bash
+          command: docker build -t pddstudio/dindwcbt:$CIRCLE_BRANCH .
+      - run:
+          name: Test Docker Image
+          shell: /bin/bash
+          command: |
+            docker create -v /home/appuser/build/npm --name configs alpine:3.4 /bin/true
+            docker cp test/npm-install.sh configs:/home/appuser/build/npm
+            docker run -d --name dindwcbt --volumes-from configs pddstudio/dindwcbt:$CIRCLE_BRANCH /bin/bash
+            docker exec dindwcbt bash -l -c "chmod a+x $HOME/build/npm/npm-install.sh; $HOME/build/npm/npm-install.sh;"
+
+
+workflows:
+  version: 2
+  commit-workflow:
+    jobs:
+      - build
+  scheduled-workflow:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only: develop
+    jobs:
+      - build
