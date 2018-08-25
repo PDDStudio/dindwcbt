@@ -98,5 +98,6 @@ typings/
 !.vscode/launch.json
 !.vscode/extensions.json
 
+.circleci/prepare-env.sh
 
 # End of https://www.gitignore.io/api/linux,node,visualstudiocode
