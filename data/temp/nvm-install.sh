@@ -348,19 +348,6 @@ nvm_do_install() {
     if nvm_profile_is_bash_or_zsh "${NVM_PROFILE-}"; then
       BASH_OR_ZSH=true
     fi
-    if ! command grep -qc '/nvm.sh' "$NVM_PROFILE"; then
-      echo "=> Appending nvm source string to $NVM_PROFILE"
-      command printf "${SOURCE_STR}" >> "$NVM_PROFILE"
-    else
-      echo "=> nvm source string already in ${NVM_PROFILE}"
-    fi
-    # shellcheck disable=SC2016
-    if ${BASH_OR_ZSH} && ! command grep -qc '$NVM_DIR/bash_completion' "$NVM_PROFILE"; then
-      echo "=> Appending bash_completion source string to $NVM_PROFILE"
-      command printf "$COMPLETION_STR" >> "$NVM_PROFILE"
-    else
-      echo "=> bash_completion source string already in ${NVM_PROFILE}"
-    fi
   fi
   if ${BASH_OR_ZSH} && [ -z "${NVM_PROFILE-}" ] ; then
     echo "=> Please also append the following lines to the if you are using bash/zsh shell:"
